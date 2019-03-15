@@ -14,12 +14,11 @@ namespace exmane1.Controllers
 
         private ContextoMongo elContexto = new ContextoMongo();
 
-        public ActionResult LosTratamientos(string id)
+        public ActionResult LasVistas(string id)
         {
             var estudiantes = elContexto.LosEstudiantes;
-            //var filter = Builders<Animales>.Filter.Eq(x => x._id, id);
 
-            var elEstudiante = estudiantes.Find<Estudiante>(a => a._carne == id).FirstOrDefault();
+            var elEstudiante = estudiantes.Find<Estudiante>(a => a.carne == id).FirstOrDefault();
             return View(elEstudiante.visitas);
         }
 
@@ -28,7 +27,7 @@ namespace exmane1.Controllers
         public ActionResult Index()
         {
             var estudiantes = elContexto.LosEstudiantes;
-            var losEstudiantes = estudiantes.AsQueryable().ToList();
+            var losEstudiantes = estudiantes.AsQueryable().OrderBy(a => a.carrera).ThenBy(a => a.nombre).ToList();
             return View(losEstudiantes);
         }
 
@@ -52,6 +51,9 @@ namespace exmane1.Controllers
             {
                 var estudiantes = elContexto.LosEstudiantes;
                 elEstudiante.visitas = new List<Visitas>();
+                //Visitas visitas = new Visitas();
+                //visitas.nombre_biblioteca = "Fidelitas";
+
                 estudiantes.InsertOne(elEstudiante);
 
                 return RedirectToAction("Index");
