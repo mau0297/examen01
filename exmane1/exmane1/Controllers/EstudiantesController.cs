@@ -51,9 +51,8 @@ namespace exmane1.Controllers
             {
                 var estudiantes = elContexto.LosEstudiantes;
                 elEstudiante.visitas = new List<Visitas>();
-                //Visitas visitas = new Visitas();
-                //visitas.nombre_biblioteca = "Fidelitas";
-
+                Visitas visitas = new Visitas();
+                visitas.nombre_biblioteca = "Fidelitas";
                 estudiantes.InsertOne(elEstudiante);
 
                 return RedirectToAction("Index");
